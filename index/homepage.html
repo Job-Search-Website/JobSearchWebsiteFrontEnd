@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+  <title>翻页</title>
+  <style type="text/css">
+    #ul1 {position: absolute;
+    padding-top: 40px;
+    padding-right: 40px;
+    width: 300px;
+      height: 100px;
+      line-height: 15px;
+      border: 1px solid red;
+      background-color: bisque;
+      margin-top: 30px;
+    }
+
+    
+    #ol1 li{
+      width: 300px;
+      height: 100px;
+      line-height: 15px;
+      border: 1px solid red;
+      background-color: bisque;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body text="blue" style="background-repeat:no-repeat;
+      background-size:cover;background-color: #47C4ED; ">
+<ul class="layui-nav">
+        <li class="layui-nav-item"><a href="#">求职加油站</a></li>
+        <li class="layui-nav-item layui-this"><a href="homepage.html">首页</a></li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">新闻</a>
+        </li>
+        <li class="layui-nav-item"><a href="javascript:;">XX</a></li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">平台介绍</a>
+        </li>
+        <li class="layui-nav-item"><a href="javascript:;">敬请期待</a></li>
+</ul>
+<ul id="ul1">
+  <li>
+    <form  action="qiuzhijiayouzhan_login.html" >
+      <input type="submit" value="登入">
+      </form>
+     </li>
+  <li>
+    <form  action="qiuzhijiayouzhan_register.html" >
+    <input type="submit" value="注册">
+    </form>
+  </li>
+</ul>
+    
+  <div style="border: 1 solid red;padding-top: 120px;padding-left: 400px;">
+    <ol id="ol1">
+      
+    </ol>
+    <div style="position: absolute; left: 600px;top: 600px;">
+      <button class="pageChange" pageNum="0">第一页</button>
+      <button class="pageChange" pageNum="1">第二页</button>
+      <button class="pageChange" pageNum="2">第三页</button>
+    </div>
+  </div>
+  <script type="text/javascript">
+    window.onload = function () 
+    {
+      var data = [  
+        { name: "aa", age: 10},
+        { name: "bb", age: 11},
+        { name: "cc", age: 12},
+        { name: "dd", age: 23},
+        { name: "ee", age: 50},
+        { name: "ff", age: 24},
+        { name: "gg", age: 62},
+        { name: "hh", age: 16},
+        { name: "ii", age: 35}
+      ]; 
+ 
+      var oOl = document.getElementById('ol1');
+      var outStr = "";
+      for (var i = 0; i < 3; i++) {
+        outStr += '<li id="demo"><span>' + data[i].name + '</span> <span>' + data[i].age + '</span></li>';
+      }
+      oOl.innerHTML = outStr;
+      
+      // 实现翻页功能
+      var aBtn = document.getElementsByClassName('pageChange');
+      for (var j = 0; j < aBtn.length; j++) { 
+        aBtn[j].onclick = function (event) {
+          var pageNum = parseInt(event.target.getAttribute("pageNum")); 
+          outStr = "";
+          for (var i = pageNum*3; i < pageNum*3+3; i++) { 
+            outStr += '<li><span>' + data[i].name + '</span> <span>' + data[i].age + '</span></li>';
+          }
+          oOl.innerHTML = outStr;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
