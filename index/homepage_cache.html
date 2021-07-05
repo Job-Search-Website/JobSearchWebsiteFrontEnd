@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="layui/css/layui.css"  media="all">
-  <title>homepage</title>
+  <title>翻页</title>
   <style type="text/css">
     #ul1 {position: absolute;
     padding-top: 40px;
@@ -30,7 +30,8 @@
     }
   </style>
 </head>
-<body>
+<body text="blue" style="background-repeat:no-repeat;
+      background-size:cover;background-color: #47C4ED; ">
 <ul class="layui-nav">
         <li class="layui-nav-item"><a href="#">求职加油站</a></li>
         <li class="layui-nav-item layui-this"><a href="homepage.html">首页</a></li>
@@ -54,12 +55,8 @@
     <input type="submit" value="注册">
     </form>
   </li>
-  <li>
-    <form  action="myself.html" >
-    <input type="submit" value="个人主页">
-    </form>
-  </li>
 </ul>
+    
   <div style="border: 1 solid red;padding-top: 120px;padding-left: 400px;">
     <ol id="ol1">
       
@@ -73,52 +70,35 @@
   <script type="text/javascript">
     window.onload = function () 
     {
-    
+      var data = [  
+        { name: "aa", age: 10},
+        { name: "bb", age: 11},
+        { name: "cc", age: 12},
+        { name: "dd", age: 23},
+        { name: "ee", age: 50},
+        { name: "ff", age: 24},
+        { name: "gg", age: 62},
+        { name: "hh", age: 16},
+        { name: "ii", age: 35}
+      ]; 
  
       var oOl = document.getElementById('ol1');
       var outStr = "";
-      
+      for (var i = 0; i < 3; i++) {
+        outStr += '<li id="demo"><span>' + data[i].name + '</span> <span>' + data[i].age + '</span></li>';
+      }
       oOl.innerHTML = outStr;
-      var xmlhttp=new XMLHttpRequest();
-                xmlhttp.onreadystatechange=function()
-	            {
-		            if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		            {
-                        var json_xmlhttp=JSON.parse(xmlhttp.responseText);
-                        outStr = "";
-                        for (var i = 0; i < 3; i++) { 
-                              outStr += '<li><span>' + json_xmlhttp.msg[i].email + '</span></li>';
-                        }
-                         oOl.innerHTML = outStr;
-		            }
-	            }
-                xmlhttp.open("GET","http://localhost:8080/api/hr/hr_list?page=0&number=3",true);
-                xmlhttp.send(); 
       
       // 实现翻页功能
-      var pageNum
       var aBtn = document.getElementsByClassName('pageChange');
       for (var j = 0; j < aBtn.length; j++) { 
-        aBtn[j].onclick = function (event) {                     
+        aBtn[j].onclick = function (event) {
+          var pageNum = parseInt(event.target.getAttribute("pageNum")); 
           outStr = "";
+          for (var i = pageNum*3; i < pageNum*3+3; i++) { 
+            outStr += '<li><span>' + data[i].name + '</span> <span>' + data[i].age + '</span></li>';
+          }
           oOl.innerHTML = outStr;
-          pageNum = event.target.getAttribute("pageNum");
-          var xmlhttp=new XMLHttpRequest();
-                xmlhttp.onreadystatechange=function()
-	            {
-		            if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		            {
-                  var json_xmlhttp=JSON.parse(xmlhttp.responseText);
-                        outStr = "";
-                        for (var i = 0; i < 3; i++) { 
-                              outStr += '<li><span>' + json_xmlhttp.msg[i].email + '</span></li>';
-                        }
-                         oOl.innerHTML = outStr;
-		            }
-	            }
-                xmlhttp.open("GET","http://localhost:8080/api/hr/hr_list?page="+pageNum+"&number=3",true);
-                xmlhttp.send(); 
-          
         }
       }
     }

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+        <title>求职加油站(qiuzhijiayouzhan.top)</title>
+    </head>
+    <style>
+        table
+        {
+            width:50%;
+        }
+        td
+        {
+            height:200px
+        }
+    </style>
+    <body>
+        <ul class="layui-nav">
+            <li class="layui-nav-item"><a href="#">求职加油站</a></li>
+            <li class="layui-nav-item layui-this"><a href="homepage.html">首页</a></li>
+            <li class="layui-nav-item">
+              <a href="javascript:;">新闻</a>
+            </li>
+            <li class="layui-nav-item"><a href="javascript:;">XX</a></li>
+            <li class="layui-nav-item">
+              <a href="javascript:;">平台介绍</a>
+            </li>
+            <li class="layui-nav-item"><a href="javascript:;">敬请期待</a></li>
+          </ul>
+
+        <ul>
+            <li><p  id="name">姓名</p></li>
+            <li><p  id="email">邮箱</p></li>
+            <li><p  id="introduction">个人信息</p></li>
+        </ul>
+        <script>
+            var xmlhttp=new XMLHttpRequest();
+                xmlhttp.onreadystatechange=function()
+	            {
+		            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		            {
+                        var json_xmlhttp=JSON.parse(xmlhttp.responseText);
+                        document.getElementById("name").innerHTML=json_xmlhttp.name;
+                        document.getElementById("email").innerHTML=json_xmlhttp.email;
+                        document.getElementById("introduction").innerHTML=json_xmlhttp.introduction;                                      
+		            }
+	            }
+                xmlhttp.open("GET","http://localhost:8080/api/auth/myself?email="+"1748771273@qq.com",true);
+                xmlhttp.send();
+          
+        </script>
+        <table border="2px">
+            <tr>
+                <td><a id="resume_1" href="login.html" style="text-decoration: none;"></a></td>
+            </tr>
+            <tr>
+                <td><a id="resume_2" href="login.html" style="text-decoration: none;"></a></td>
+            </tr>
+        </table>     
+        <script>
+            function loadxmldoc(num)
+            {
+                var xmlhttp=new XMLHttpRequest();
+                xmlhttp.onreadystatechange=function()
+	            {
+		            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		            {
+                        var json_xmlhttp=JSON.parse(xmlhttp.responseText);
+                            document.getElementById("resume_1").innerHTML=json_xmlhttp.resume[2*num].resumecontext;  
+                            document.getElementById("resume_2").innerHTML=json_xmlhttp.resume[2*num+1].resumecontext;                                             
+		            }
+	            }
+                xmlhttp.open("GET","http://localhost:8080/api/auth/myhr?email="+"1748771273@qq.com",true);
+                xmlhttp.send();
+            }
+            loadxmldoc(0);
+            function loadpage(num)
+            {
+                document.getElementById("resume_1").innerHTML=" ";
+                document.getElementById("resume_2").innerHTML=" ";
+                if(num==1)
+                {
+                    loadxmldoc(1);
+                }
+                else if(num==2)
+                {
+                    loadxmldoc(2);
+                }
+                else if(num==0)
+                {
+                    loadxmldoc(0);
+                }
+            }
+        </script>
+          <button type="button" onclick="loadpage(0)">第一页</button>
+          <button type="button" onclick="loadpage(1)">第二页</button>
+          <button type="button" onclick="loadpage(2)">第三页</button>
+   
+        </body>
+</html>
